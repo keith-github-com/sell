@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/sell?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non-null
+server:
+    context-path: /sell
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  path: D:\dev\source\diancan\log
+#  file: D:\dev\source\diancan\log\sell.log
+#  level:
+#    com.imooc.LoggerTest: debug
+wechat:
+  mpAppId: wxaa577a46b8f1dd3b
+  mpAppSecret: 6e018c145122b379e947c8b0fc0611aa
+
+projectUrl:
+  wechatMpAuthorize: https://jianlin.natapp4.cc
+  wechatOpenAuthorize: https://jianlin.natapp4.cc
+  sell: https://jianlin.natapp4.cc
