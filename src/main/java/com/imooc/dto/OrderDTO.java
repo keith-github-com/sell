@@ -60,6 +60,7 @@ public class OrderDTO {
 
     @JsonIgnore
     public OrderStatusEnum getOrderStatusEnum() {
+    	//getByCode是静态方法，所以不用new直接使用
         return EnumUtil.getByCode(orderStatus, OrderStatusEnum.class);
     }
 
