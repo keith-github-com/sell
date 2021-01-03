@@ -63,13 +63,13 @@ public class ProductServiceImplTest {
 
     @Test
     public void onSale() {
-        ProductInfo result = productService.onSale("123456");
+        ProductInfo result = productService.onSale("00123456");
         Assert.assertEquals(ProductStatusEnum.UP, result.getProductStatusEnum());
     }
 
     @Test
     public void offSale() {
-        ProductInfo result = productService.offSale("123456");
+        ProductInfo result = productService.offSale("00123456");
         Assert.assertEquals(ProductStatusEnum.DOWN, result.getProductStatusEnum());
     }
 

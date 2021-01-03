@@ -80,7 +80,7 @@
 
 </div>
 
-<#--弹窗-->
+<#--弹窗
 <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -100,8 +100,9 @@
         </div>
     </div>
 </div>
+-->
 
-<#--播放音乐-->
+<#--播放音乐
 <audio id="notice" loop="loop">
     <source src="/sell/mp3/song.mp3" type="audio/mpeg" />
 </audio>
@@ -141,6 +142,6 @@
     }
 
 </script>
-
+-->
 </body>
 </html>

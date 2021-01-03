@@ -56,7 +56,7 @@ public class ProductInfo {
 
     private Date updateTime;
 
-    //向前台返回的Json不包含以下的方法或属性
+    //JsonIgnore向前端返回的Json不包含以下的方法或属性
     /** 在枚举类ProductStatusEnum中找出所有的实例序列，根据状态码code找到对应的实例 */
     @JsonIgnore
     public ProductStatusEnum getProductStatusEnum() {
