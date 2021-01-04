@@ -24,8 +24,8 @@ import org.hibernate.annotations.DynamicUpdate;
  */
 @Entity
 @Data
-@DynamicUpdate
-@DynamicInsert
+@DynamicUpdate  //表示update对象的时候，生成动态的update语句，如果这个字段的值是null就不会被加入到update语句中
+@DynamicInsert  //表示insert对象的时候，生成动态的insert语句，如果这个字段的值是null就不会加入到insert语句中
 public class ProductInfo {
 
     @Id

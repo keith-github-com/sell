@@ -6,6 +6,7 @@ spring:
     url: jdbc:mysql://localhost:3306/sell?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
   jpa:
     show-sql: true
+#如果该属性为NULL则不参与序列化
   jackson:
     default-property-inclusion: non-null
 server:
