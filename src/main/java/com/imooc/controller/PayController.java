@@ -28,6 +28,13 @@ public class PayController {
     @Autowired
     private PayService payService;
 
+    //实现逻辑：
+    //第一步，前端页面调用接口"/sell/pay/create"
+    //第二步，发起支付，调用JSAPI
+    //第三步，返回到"pay/create"模板，并将PayResponse返回给该模板中的接口（getBrandWCPayRequest）作为请求参数
+    //第四步，跳转至https://jianlin.natapp4.cc/#/order/"相应的orderId"（前端页面）
+    
+    //这里的入参returnUrl为https://jianlin.natapp4.cc/#/order/"相应的orderId"（前端页面）;
     @GetMapping("/create")
     public ModelAndView create(@RequestParam("orderId") String orderId,
                                @RequestParam("returnUrl") String returnUrl,
@@ -38,7 +45,7 @@ public class PayController {
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
 
-        //2. 发起支付
+        //2. 发起支付，调用JSAPI，业务逻辑详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6
         PayResponse payResponse = payService.create(orderDTO);
 
         map.put("payResponse", payResponse);

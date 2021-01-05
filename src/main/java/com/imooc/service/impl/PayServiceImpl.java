@@ -33,6 +33,14 @@ public class PayServiceImpl implements PayService {
     @Autowired
     private OrderService orderService;
 
+    //service实现逻辑：
+    //第一步，yml文件：配置相关的ID与密钥；
+    //第二步，WechatAccountConfig：引入配置属性（公众平台Id、公众平台密钥、商户号、商户密钥、商户证书路径、微信支付异步通知地址）
+    //第三步，WechatPayConfig（配置容器）：将WechatAccountConfig配置属性写入到WxPayH5Config对象（BEAN）中，再将WxPayH5Config对象配置引入到BestPayServiceImpl对象（BEAN）中
+    //第四步，PayServiceImpl：已配置好的BestPayServiceImpl对象（BEAN），调用pay方法发起微信支付，pay方法要求payRequest入参，调用统一下单接口（https://api.mch.weixin.qq.com/pay/unifiedorder），并返回PayResponse
+    //第五步，PayResponse返回给网页端中的接口（getBrandWCPayRequest）作为请求参数
+    
+    
     @Override
     public PayResponse create(OrderDTO orderDTO) {
         PayRequest payRequest = new PayRequest();
@@ -43,11 +51,13 @@ public class PayServiceImpl implements PayService {
         payRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
         log.info("【微信支付】发起支付, request={}", JsonUtil.toJson(payRequest));
 
+        //BestPayServiceImpl可支持微信支付、支付宝支付
         PayResponse payResponse = bestPayService.pay(payRequest);
         log.info("【微信支付】发起支付, response={}", JsonUtil.toJson(payResponse));
         return payResponse;
     }
 
+    //支付成功后，返回给微信前端的通知
     @Override
     public PayResponse notify(String notifyData) {
         //1. 验证签名

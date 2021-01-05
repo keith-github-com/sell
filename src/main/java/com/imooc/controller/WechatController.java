@@ -34,7 +34,7 @@ public class WechatController {
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
 
-    //oauth2buildAuthorizationUrl相当于https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa577a46b8f1dd3b&redirect_uri=https://jianlin.natapp4.cc/sell/wechat/userInfo&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect
+    //oauth2buildAuthorizationUrl相当于https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa577a46b8f1dd3b&redirect_uri=https://jianlin.natapp4.cc/sell/wechat/userInfo&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
     //oauth2getAccessToken相当于https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxaa577a46b8f1dd3b&secret=48e92cabe75cb76ce95cc29614688718&code=CODE&grant_type=authorization_code，返回一个json对象
     
     //该方法最终结果返回：returnUrl？openid=openId
@@ -55,7 +55,7 @@ public class WechatController {
                          @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
         try {
-        	//用code换取oauth2的access token，返回WxMpOAuth2AccessToken对象
+        	//用code换取oauth2的access token，返回WxMpOAuth2AccessToken(JOSON)对象
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
         } catch (WxErrorException e) {
             log.error("【微信网页授权】{}", e);
