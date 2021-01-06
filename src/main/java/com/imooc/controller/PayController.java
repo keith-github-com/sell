@@ -30,8 +30,8 @@ public class PayController {
 
     //实现逻辑：
     //第一步，前端页面调用接口"/sell/pay/create"
-    //第二步，发起支付，调用JSAPI
-    //第三步，返回到"pay/create"模板，并将PayResponse返回给该模板中的接口（getBrandWCPayRequest）作为请求参数
+    //第二步，通过BestPayServiceImpl发起支付，传入xml格式参数，调用API：https://api.mch.weixin.qq.com/pay/unifiedorder(必须要传入异步接收微信支付结果通知的回调地址notify_url)
+    //第三步，返回到"pay/create"模板，并将PayResponse返回给该模板中的JSAPI接口（getBrandWCPayRequest）作为请求参数
     //第四步，跳转至https://jianlin.natapp4.cc/#/order/"相应的orderId"（前端页面）
     
     //这里的入参returnUrl为https://jianlin.natapp4.cc/#/order/"相应的orderId"（前端页面）;
