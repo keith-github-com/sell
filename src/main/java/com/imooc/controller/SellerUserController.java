@@ -57,7 +57,7 @@ public class SellerUserController {
         String token = UUID.randomUUID().toString();
         Integer expire = RedisConstant.EXPIRE;
 
-        //opsForValue()操作字符串
+        //opsForValue()操作字符串，以下的set传入四个参数：K key, V value, long timeout, TimeUnit unit，  设置变量值的过期时间
         redisTemplate.opsForValue().set(String.format(RedisConstant.TOKEN_PREFIX, token), openid, expire, TimeUnit.SECONDS);
 
         //3. 设置token至cookie
