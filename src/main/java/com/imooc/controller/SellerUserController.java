@@ -40,6 +40,11 @@ public class SellerUserController {
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
 
+    //登陆的逻辑：
+    //1、卖家所有的接口被SellerAuthorizeAspect拦截，除非cookie与redis找到对应的token和openId
+    //2、被拦截后，会抛出异常，并被SellExceptionHandler处理，转发至http://sell.natapp4.cc/sell/wechat/qrAuthorize?returnUrl=http://sell.natapp4.cc/sell/seller/login
+    //3、扫码后，如果在cookie与redis找到对应的token和openId，返回http://sell.natapp4.cc/sell/seller/login?openid=openId进行登陆
+    //4、登陆时，会重新设置token至cookie与redis中，openId不变
     @GetMapping("/login")
     public ModelAndView login(@RequestParam("openid") String openid,
                               HttpServletResponse response,
@@ -57,7 +62,8 @@ public class SellerUserController {
         String token = UUID.randomUUID().toString();
         Integer expire = RedisConstant.EXPIRE;
 
-        //opsForValue()操作字符串，以下的set传入四个参数：K key, V value, long timeout, TimeUnit unit，  设置变量值的过期时间
+        //opsForValue()操作字符串，以下的set传入四个参数：K key, V value, long timeout, TimeUnit unit；设置变量值的过期时间
+        //key是token，value是openId 
         redisTemplate.opsForValue().set(String.format(RedisConstant.TOKEN_PREFIX, token), openid, expire, TimeUnit.SECONDS);
 
         //3. 设置token至cookie

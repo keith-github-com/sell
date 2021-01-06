@@ -9,6 +9,9 @@ spring:
 #如果该属性为NULL则在前端的json中不显示
   jackson:
     default-property-inclusion: non-null
+  redis:
+    host: 192.168.30.113
+    port: 6379
 server:
     context-path: /sell
 #logging:
