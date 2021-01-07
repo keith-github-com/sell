@@ -40,11 +40,13 @@ public class SellerUserController {
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
 
-    //登陆的逻辑：
-    //1、卖家所有的接口被SellerAuthorizeAspect拦截，除非cookie与redis找到对应的token和openId
+    //卖家后台管理系统登陆的逻辑：
+    //1、卖家所有的接口被SellerAuthorizeAspect拦截，除非cookie与redis均找到对应的token和openId
     //2、被拦截后，会抛出异常，并被SellExceptionHandler处理，转发至http://sell.natapp4.cc/sell/wechat/qrAuthorize?returnUrl=http://sell.natapp4.cc/sell/seller/login
-    //3、扫码后，如果在cookie与redis找到对应的token和openId，返回http://sell.natapp4.cc/sell/seller/login?openid=openId进行登陆
-    //4、登陆时，会重新设置token至cookie与redis中，openId不变
+    //3、转到qrAuthorize方法后建立扫码连接（在open平台中接口），https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+    //4、扫码后，用户同意授权会重定向到redirect_uri的网址上（即qrUserInfo方法），并且带上code和state参数，调用mp平台中的接口用code换取oauth2的access token，方法最终会返回返回http://sell.natapp4.cc/sell/seller/login?openid=openId进行登陆
+    //5、在进行登陆时，在数据库中对比连接携带参数openId；如果数据存在该openId，则会在cookie与redis中设置token和openId，并返回http://sell.natapp4.cc/sell/seller/order/list
+    //6、返回以上链接会被SellerAuthorizeAspect再次拦截，但由于可以在cookie与redis中找到token和openId，所以不会再跳到扫码界面。至此登陆成功
     @GetMapping("/login")
     public ModelAndView login(@RequestParam("openid") String openid,
                               HttpServletResponse response,

@@ -31,9 +31,11 @@ public class PushMessageServiceImpl implements PushMessageService {
     @Override
     public void orderStatus(OrderDTO orderDTO) {
         WxMpTemplateMessage templateMessage = new WxMpTemplateMessage();
+        //设置模板id，templateId是一个map类型属性
         templateMessage.setTemplateId(accountConfig.getTemplateId().get("orderStatus"));
+        //设置接收者openid
         templateMessage.setToUser(orderDTO.getBuyerOpenid());
-
+        //设置模板内容data（是一个list），WxMpTemplateData类的属性包含name与value
         List<WxMpTemplateData> data = Arrays.asList(
                 new WxMpTemplateData("first", "亲，请记得收货。"),
                 new WxMpTemplateData("keyword1", "微信点餐"),
@@ -44,6 +46,8 @@ public class PushMessageServiceImpl implements PushMessageService {
                 new WxMpTemplateData("remark", "欢迎再次光临！")
         );
         templateMessage.setData(data);
+        //WxMpTemplateMsgService：返回模板消息相关接口方法的实现类对象，以方便调用其各个接口
+        //sendTemplateMsg发送消息模板的方法，调用的接口的http请求方式是POST，接口为https://api.weixin.qq.com/cgi-bin/message/template/send
         try {
             wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
         }catch (WxErrorException e) {

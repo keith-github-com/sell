@@ -34,10 +34,17 @@ public class WechatController {
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
 
-    //oauth2buildAuthorizationUrl相当于https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa577a46b8f1dd3b&redirect_uri=https://jianlin.natapp4.cc/sell/wechat/userInfo&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
-    //oauth2getAccessToken相当于https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxaa577a46b8f1dd3b&secret=48e92cabe75cb76ce95cc29614688718&code=CODE&grant_type=authorization_code，返回一个json对象
+    //前端商品展示页面登陆逻辑：
+    //1、登陆主页时https://jianlin.natapp4.cc/sell/，会进入到前端goods页面；
+    //2、前端goods页面会自动获取cookie；如果cookie中没有openId，会跳转至https://jianlin.natapp4.cc/sell/wechat/authorize?returnUrl=https://jianlin.natapp4.cc/sell/#/
+    //3、authorize会构建授权接口（mp平台中接口）https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa577a46b8f1dd3b&redirect_uri=https://jianlin.natapp4.cc/sell/wechat/userInfo&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+    //4、用户同意授权会重定向到redirect_uri的网址上（即userInfo方法），并且带上code和state参数，调用mp平台中的接口用code换取oauth2的access token
+    //5、方法最终会返回返回returnUrl？openid=openId，其中returnUrl=https://jianlin.natapp4.cc/sell/#/，而登陆到前端主页面
     
-    //该方法最终结果返回：returnUrl？openid=openId
+    //注意：
+    //oauth2buildAuthorizationUrl方法相当于https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa577a46b8f1dd3b&redirect_uri=https://jianlin.natapp4.cc/sell/wechat/userInfo&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+    //oauth2getAccessToken方法相当于https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxaa577a46b8f1dd3b&secret=48e92cabe75cb76ce95cc29614688718&code=CODE&grant_type=authorization_code，返回一个json对象
+    //authorize方法最终结果返回：returnUrl？openid=openId
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
         //1. 配置
@@ -67,6 +74,7 @@ public class WechatController {
         return "redirect:" + returnUrl + "?openid=" + openId;
     }
 
+    //
     @GetMapping("/qrAuthorize")
     public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) {
         String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qrUserInfo";

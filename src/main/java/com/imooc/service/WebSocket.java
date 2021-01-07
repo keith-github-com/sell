@@ -20,7 +20,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class WebSocket {
 
     private Session session;
-
+    
+    //CopyOnWriteArraySet是线程安全的无序的集合，可以将它理解成线程安全的HashSet，通过“动态数组(CopyOnWriteArrayList)”实现的，并不是散列表。
     private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     @OnOpen
