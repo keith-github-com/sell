@@ -1,24 +1,8 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-<<<<<<< HEAD
+#java
+!**/src/main/**/build/
+!**/src/test/**/build/
 !**/src/main/**/target/
 !**/src/test/**/target/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
 
 ### NetBeans ###
 /nbproject/private/
@@ -27,24 +11,23 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-=======
-!**/src/main/**
-!**/src/test/**
+#package file
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-.log
+#maven ignore
+target/
+build/
+!.mvn/wrapper/maven-wrapper.jar
+
+#eclipse ignore
+#.settings/
+#.project
+#.classpath
 
 ### IntelliJ IDEA ###
 .idea
@@ -54,26 +37,26 @@ build/
 .mvn
 mvnw*
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-
 ### VS Code ###
 .vscode/
+
+### STS ###
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
 
 ### generated files ###
 bin/
 gen/
 
-### MAC ###
+# system ignore
 .DS_Store
+Thumbs.db
 
-### Other ###
-logs/
-log
-temp/
->>>>>>> branch 'master' of git@gitee.com:lao-jianlin/sell.git
+# temp file
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
